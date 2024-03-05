@@ -27,6 +27,8 @@ Migrate to database
 $ migrate -database "postgresql://root:example@127.0.0.1:5432/postgres?sslmode=disable" -source file://db/migrations up
 ```
 
+All endpoints are documented in the `docs.yaml` file found in the `api` directory.
+
 # Testing
 
 Start by ensuring your database is running.
