@@ -1,0 +1,5 @@
+CREATE FUNCTION gen_uid() RETURNS text AS $$
+BEGIN
+    return substring(md5('' || now()::text || RANDOM()::TEXT) for 10);
+END
+    $$ LANGUAGE plpgsql VOLATILE;

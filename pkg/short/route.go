@@ -2,9 +2,15 @@ package short
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/jmoiron/sqlx"
+	"gorm.io/gorm"
+	"net/http"
 )
 
-func Route(conn *sqlx.DB, router *gin.RouterGroup) {
+func Route(conn *gorm.DB, router *gin.RouterGroup) {
+	rg := router.Group("/s")
 
+	rg.GET("/:id", func(c *gin.Context) {
+
+		c.Status(http.StatusOK)
+	})
 }
