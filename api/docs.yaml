@@ -1,12 +1,111 @@
 openapi: 3.0.3
 info:
   title: Url Shorter
-  description: Url Shorter
+  description: Url Shortener
   version: 1.0.0
 servers:
   - url: 'http://localhost:8080'
 paths:
+  /health:
+    get:
+      description: Gets if the server is currently active
+      summary: Get Health
+      responses:
+        200:
+          description: New response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "ok"
+  /s:
+    post:
+      description: Create Short
+      requestBody:
+        required: true
+        description: the short that needs to be made
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: the url this short should redirect to
+                  required: true
+      responses:
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerError"
+        201:
+          description: Short Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: unique id of the short
+                  url:
+                    type: string
+                    description: the url the short redirects to
+  /s/{short_id}/details:
+    parameters:
+      - in: path
+        name: short_id
+        schema:
+          type: string
+        required: true
+        description: unique id of the short
+    get:
+      summary: Get Short Details
+      description: Gets the details and metrics of a given short
+      responses:
+        404:
+          description: Short Not Found
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerError"
+        200:
+          description: Short details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: unique id of the short. used to recall it during redirection.
+                  url:
+                    type: string
+                    description: url of the short, where the redirection goes.
+                  last_24_hours:
+                    type: integer
+                    description: number of times this short was used in the last 24 hours.
+                  past_week:
+                    type: integer
+                    description: number of times this short was used in the last week.
+                  all_time:
+                    type: integer
+                    description: number of times this short was used during its entire lifetime.
   /s/{short_id}:
+    parameters:
+      - in: path
+        name: short_id
+        schema:
+          type: string
+        required: true
+        description: unique id of the short
     get:
       summary: Get Short
       description: Redirects client if the short exists

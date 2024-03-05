@@ -99,7 +99,11 @@ func ShortDetails(conn *gorm.DB) gin.HandlerFunc {
 		reqShort := Short{ID: id}
 		res := conn.First(&reqShort)
 		if res.Error != nil {
-			c.AbortWithStatusJSON(http.StatusInternalServerError, JsonError(res.Error))
+			if errors.Is(res.Error, gorm.ErrRecordNotFound) {
+				c.AbortWithStatus(http.StatusNotFound)
+			} else {
+				c.AbortWithStatusJSON(http.StatusInternalServerError, JsonError(res.Error))
+			}
 			return
 		}
 
