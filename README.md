@@ -26,3 +26,19 @@ Migrate to database
 ```shell
 $ migrate -database "postgresql://root:example@127.0.0.1:5432/postgres?sslmode=disable" -source file://db/migrations up
 ```
+
+# Testing
+
+Start by ensuring your database is running.
+
+```shell
+$ docker compose up db -d
+```
+
+Then run
+
+```shell
+$ ./test.sh
+```
+
+This script will ensure the docker database is migrated and open a coverage web page.

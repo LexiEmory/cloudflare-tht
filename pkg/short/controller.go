@@ -12,10 +12,6 @@ import (
 func Redirection(conn *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		id := c.Param("id")
-		if id == "" {
-			c.AbortWithStatus(http.StatusBadRequest)
-			return
-		}
 
 		reqShort := Short{ID: id}
 		res := conn.First(&reqShort)
@@ -67,19 +63,11 @@ func CreateShort(conn *gorm.DB) gin.HandlerFunc {
 func DeleteShort(conn *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		id := c.Param("id")
-		if id == "" {
-			c.AbortWithStatus(http.StatusBadRequest)
-			return
-		}
 
 		reqShort := Short{ID: id}
 		res := conn.Delete(&reqShort)
 		if res.Error != nil {
-			if errors.Is(res.Error, gorm.ErrRecordNotFound) {
-				c.AbortWithStatus(http.StatusNotFound)
-			} else {
-				c.AbortWithStatusJSON(http.StatusInternalServerError, JsonError(res.Error))
-			}
+			c.AbortWithStatusJSON(http.StatusInternalServerError, JsonError(res.Error))
 			return
 		}
 
@@ -91,10 +79,6 @@ func DeleteShort(conn *gorm.DB) gin.HandlerFunc {
 func ShortDetails(conn *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		id := c.Param("id")
-		if id == "" {
-			c.AbortWithStatus(http.StatusBadRequest)
-			return
-		}
 
 		reqShort := Short{ID: id}
 		res := conn.First(&reqShort)

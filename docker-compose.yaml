@@ -26,4 +26,5 @@ services:
       POSTGRES_PASSWORD: example
     volumes:
       - ./db/cache:/var/lib/postgresql/data
+      - ./db/bootstrap.sql:/docker-entrypoint-initdb.d/init.sql
 

@@ -130,8 +130,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ServerError"
-        404:
-          description: Short Not Found
         204:
           description: Successfully deleted short
 components:
