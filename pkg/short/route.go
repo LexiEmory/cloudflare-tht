@@ -3,14 +3,13 @@ package short
 import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
-	"net/http"
 )
 
 func Route(conn *gorm.DB, router *gin.RouterGroup) {
-	rg := router.Group("/s")
+	rg := router.Group("/s", RequestLogger(conn))
 
-	rg.GET("/:id", func(c *gin.Context) {
-
-		c.Status(http.StatusOK)
-	})
+	rg.GET("/:id", Redirection(conn))
+	rg.POST("/", CreateShort(conn))
+	rg.DELETE("/:id", DeleteShort(conn))
+	rg.GET("/:id/details", ShortDetails(conn))
 }

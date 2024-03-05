@@ -1,0 +1,45 @@
+openapi: 3.0.3
+info:
+  title: Url Shorter
+  description: Url Shorter
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8080'
+paths:
+  /s/{short_id}:
+    get:
+      summary: Get Short
+      description: Redirects client if the short exists
+      responses:
+        404:
+          description: Short Not Found
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerError"
+        302:
+          description: Redirects user to url on the short model
+    delete:
+      description: Deletes a short if it exists
+      summary: Delete Short
+      responses:
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerError"
+        404:
+          description: Short Not Found
+        204:
+          description: Successfully deleted short
+components:
+  schemas:
+    ServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          description: String of the error that occurred

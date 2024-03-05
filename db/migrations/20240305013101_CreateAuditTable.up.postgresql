@@ -1,0 +1,11 @@
+create table audits
+(
+    id       bigserial not null
+        constraint audits_pk
+            primary key,
+    action       text      not null,
+    path         text      not null,
+    request      text      not null,
+    invoker      text      not null,
+    latency      text      not null
+);

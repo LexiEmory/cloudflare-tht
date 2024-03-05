@@ -1,9 +1,8 @@
-create table short
+create table shorts
 (
     id   text    default gen_uid() not null
         constraint short_pk
             primary key,
-    uses integer default 0         not null,
     url  text                      not null
 );
 

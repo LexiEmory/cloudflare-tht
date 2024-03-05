@@ -1,0 +1,11 @@
+create table access_logs
+(
+    id          bigserial not null
+        constraint access_logs_pk
+            primary key,
+    short_id    text   not null
+        constraint access_logs_shorts_id_fk
+            references shorts
+            on delete cascade,
+    access_time timestamp not null
+);

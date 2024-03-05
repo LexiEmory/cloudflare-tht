@@ -30,9 +30,9 @@ func main() {
 
 	short.Route(db, r.Group("/"))
 
-	r.GET("/ping", func(c *gin.Context) {
+	r.GET("/health", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
+			"status": "ok",
 		})
 	})
 
